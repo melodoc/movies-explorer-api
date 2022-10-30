@@ -2,10 +2,10 @@ const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const { updateProfile, getCurrentUser } = require('../controllers/users');
 
-// возвращает информацию о пользователе (email и имя)
+// returns information about the user (email and name)
 router.get('/me', getCurrentUser);
 
-// обновляет информацию о пользователе (email и имя)
+// updates information about the user (email and name)
 router.patch(
   '/me',
   celebrate({

@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 });
 
 app.use('/', userAuth);
-app.use(auth);
+// app.use(auth);
 app.use('/users', user);
 app.use('/movies', movie);
 app.all('/*', (req, res, next) => {

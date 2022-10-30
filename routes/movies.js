@@ -3,10 +3,10 @@ const router = require('express').Router();
 const { getMovies, createMovie, deleteMovieById } = require('../controllers/movies');
 const { URL_REG_EXP } = require('../constants/constants');
 
-// возвращает все сохранённые текущим пользователем фильмы
+// returns all movies saved by the current user
 router.get('/', getMovies);
 
-// создаёт фильм с переданными параметрами
+// creates a movie
 router.post(
   '/',
   celebrate({
@@ -27,7 +27,7 @@ router.post(
   createMovie,
 );
 
-// удаляет сохранённый фильм по id
+// delete a movie by movieId
 router.delete(
   '/:movieId',
   celebrate({

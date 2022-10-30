@@ -2,6 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const { createUser, login } = require('../controllers/users');
 
+// creates a user
 router.post(
   '/signup',
   celebrate({
@@ -13,6 +14,8 @@ router.post(
   }),
   createUser,
 );
+
+// login with existing account
 router.post(
   '/signin',
   celebrate({

@@ -1,14 +1,22 @@
-// GET /movies — returns all movies
-module.exports.getMovies = () => {
-  // TODO: Дополнить
+const Movie = require('../models/movie');
+
+// GET /movies — returns all movies saved by the current user
+module.exports.getMovies = (req, res, next) => {
+  Movie.find({})
+    .then(() => res.send({ message: 'getMovies worked' }))
+    .catch(next);
 };
 
 // POST /movies — creates a movie
-module.exports.createMovie = () => {
-  // TODO: Дополнить
+module.exports.createMovie = (req, res, next) => {
+  Movie.find({})
+    .then(() => res.send({ message: 'createMovie worked' }))
+    .catch(next);
 };
 
-// DELETE /cards/:movieId — delete a card by movieId
-module.exports.deleteMovieById = () => {
-  // TODO: Дополнить
+// DELETE /cards/:movieId — delete a movie by movieId
+module.exports.deleteMovieById = (req, res, next) => {
+  Movie.find({})
+    .then(() => res.send({ message: 'deleteMovieById worked' }))
+    .catch(next);
 };
