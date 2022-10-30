@@ -6,7 +6,7 @@ const HTTP_RESPONSE = {
     status: 404,
     message: 'Некорректный URL',
     absentedMessage: {
-      user: 'Пользователь с указанным id не найден',
+      user: 'Пользователь не найден',
       movie: 'Фильм с указанным id не найден',
     },
   },

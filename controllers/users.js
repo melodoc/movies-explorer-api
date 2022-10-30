@@ -4,6 +4,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
+const NotFoundError = require('../errors/not-found-err');
 const { ERROR_TYPE } = require('../constants/errors');
 const { SECRET_KEY } = require('../constants/constants');
 
@@ -50,14 +51,22 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-// GET /me - returns information about the user (email and name)
+// GET /users/me - returns information about the user (email and name)
 module.exports.getCurrentUser = (req, res, next) => {
-  User.find({})
-    .then(() => res.send({ message: 'getCurrentUser worked' }))
-    .catch(next);
+  const { _id } = req.user;
+  User.findById(_id)
+    .then((user) => {
+      if (!user) {
+        return next(new NotFoundError(HTTP_RESPONSE.notFound.absentedMessage.user));
+      }
+      return res.send({ name: user.name, email: user.email });
+    })
+    .catch((err) => {
+      next(err);
+    });
 };
 
-// PATCH /me - updates information about the user (email and name)
+// PATCH /users/me - updates information about the user (email and name)
 module.exports.updateProfile = (req, res, next) => {
   User.find({})
     .then(() => res.send({ message: 'updateProfile worked' }))
