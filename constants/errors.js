@@ -7,7 +7,7 @@ const HTTP_RESPONSE = {
     message: 'Некорректный URL',
     absentedMessage: {
       user: 'Пользователь с указанным id не найден',
-      card: 'Фильм с указанным id не найден',
+      movie: 'Фильм с указанным id не найден',
     },
   },
   conflict: { status: 409, message: 'Сущность уже существует' },
