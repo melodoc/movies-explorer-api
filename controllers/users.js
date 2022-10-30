@@ -5,8 +5,8 @@ const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
 const NotFoundError = require('../errors/not-found-err');
-const { ERROR_TYPE } = require('../constants/errors');
-const { SECRET_KEY } = require('../constants/constants');
+const { ERROR_TYPE, HTTP_RESPONSE } = require('../constants/errors');
+const { UPDATE_PARAMS, SECRET_KEY } = require('../constants/constants');
 
 // POST /signup — creates a user
 module.exports.createUser = (req, res, next) => {
@@ -68,7 +68,23 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 // PATCH /users/me - updates information about the user (email and name)
 module.exports.updateProfile = (req, res, next) => {
-  User.find({})
-    .then(() => res.send({ message: 'updateProfile worked' }))
-    .catch(next);
+  const { email, name } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { email, name }, UPDATE_PARAMS)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError(HTTP_RESPONSE.notFound.absentedMessage.user);
+      }
+      res.send({
+        name: user.name,
+        email: user.email,
+      });
+    })
+    .catch((err) => {
+      if (err.name === ERROR_TYPE.cast || err.name === ERROR_TYPE.validity) {
+        next(new BadRequestError());
+        return;
+      }
+      next(err);
+    });
 };
