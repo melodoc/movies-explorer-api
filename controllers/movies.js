@@ -1,11 +1,13 @@
 const Movie = require('../models/movie');
-const { ERROR_TYPE } = require('../constants/errors');
 const BadRequestError = require('../errors/bad-request-err');
+const NotFoundError = require('../errors/not-found-err');
+const ForbiddenError = require('../errors/forbidden-err');
+const { ERROR_TYPE, HTTP_RESPONSE } = require('../constants/errors');
 
 // GET /movies — returns all movies saved by the current user
 module.exports.getMovies = (_req, res, next) => {
   Movie.find({})
-    .then((card) => res.send(card))
+    .then((movie) => res.send(movie))
     .catch(next);
 };
 
@@ -52,7 +54,28 @@ module.exports.createMovie = (req, res, next) => {
 
 // DELETE /movies/:movieId — delete a movie by movieId
 module.exports.deleteMovieById = (req, res, next) => {
-  Movie.find({})
-    .then(() => res.send({ message: 'deleteMovieById worked' }))
+  Movie.findById(req.params.movieId)
+    .then((movie) => {
+      if (!movie) {
+        throw new NotFoundError(HTTP_RESPONSE.notFound.absentedMessage.movie);
+      }
+      if (!movie.owner.equals(req.user._id)) {
+        throw new ForbiddenError();
+      }
+      Movie.findByIdAndDelete(req.params.movieId)
+        .then((foundMovie) => {
+          if (!foundMovie) {
+            throw new ForbiddenError();
+          }
+          res.send(foundMovie);
+        })
+        .catch((err) => {
+          if (err.name === ERROR_TYPE.cast) {
+            next(new BadRequestError());
+            return;
+          }
+          next(err);
+        });
+    })
     .catch(next);
 };
