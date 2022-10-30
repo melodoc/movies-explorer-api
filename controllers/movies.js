@@ -3,9 +3,9 @@ const { ERROR_TYPE } = require('../constants/errors');
 const BadRequestError = require('../errors/bad-request-err');
 
 // GET /movies — returns all movies saved by the current user
-module.exports.getMovies = (req, res, next) => {
+module.exports.getMovies = (_req, res, next) => {
   Movie.find({})
-    .then(() => res.send({ message: 'getMovies worked' }))
+    .then((card) => res.send(card))
     .catch(next);
 };
 
