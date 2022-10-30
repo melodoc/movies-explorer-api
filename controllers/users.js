@@ -1,9 +1,34 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict-err');
+const { ERROR_TYPE } = require('../constants/errors');
 
 // POST /signup — creates a user
 module.exports.createUser = (req, res, next) => {
-  User.find({})
-    .then(() => res.send({ message: 'createUser worked' }))
+  const { email, password, name } = req.body;
+
+  bcrypt
+    .hash(password, 10)
+    .then((hash) => User.create({
+      email,
+      password: hash,
+      name,
+    })
+      .then((user) => res.send({
+        email,
+        name: user.name,
+      }))
+      .catch((err) => {
+        if (err.name === ERROR_TYPE.validity) {
+          next(new BadRequestError());
+          return;
+        }
+        if (err.code === 11000) {
+          next(new ConflictError());
+        }
+        next(err);
+      }))
     .catch(next);
 };
 
