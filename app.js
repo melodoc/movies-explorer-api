@@ -13,7 +13,7 @@ const { HTTP_RESPONSE } = require('./constants/errors');
 const NotFoundError = require('./errors/not-found-err');
 const { cors } = require('./middlewares/cors');
 
-const { PORT = 3000 } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
