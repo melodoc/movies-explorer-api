@@ -2,7 +2,7 @@
 
 ## Link
 
-[Movies](https://api.movies-explorer.melodoc.nomoredomains.icu/)
+[Movies](https://api.movies.melodoc.nomoredomains.icu/)
 
 ## Description
 
@@ -17,7 +17,7 @@ An API where you can add movies and delete them.
 |          |                            Route                        |
 |----------|---------------------------------------------------------|
 |IP        |51.250.101.185                                            |
-|Backend   |https://api.movies-explorer.melodoc.nomoredomains.icu/   |
+|Backend   |https://api.movies.melodoc.nomoredomains.icu/   |
 
 ## The authors
 
