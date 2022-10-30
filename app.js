@@ -8,6 +8,7 @@ const userAuth = require('./routes/auth');
 const user = require('./routes/users');
 const movie = require('./routes/movies');
 const { HTTP_RESPONSE } = require('./constants/errors');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 
@@ -27,7 +28,7 @@ app.use('/', userAuth);
 app.use('/users', user);
 app.use('/movies', movie);
 app.all('/*', (req, res, next) => {
-  next(new Error(HTTP_RESPONSE.notFound.message));
+  next(new NotFoundError(HTTP_RESPONSE.notFound.message));
 });
 
 app.use(errors());
