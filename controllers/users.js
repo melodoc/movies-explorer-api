@@ -5,3 +5,11 @@ module.exports.createUser = () => {
 module.exports.login = () => {
   // TODO: Дополнить
 };
+
+module.exports.getCurrentUser = () => {
+  // TODO: Дополнить
+};
+
+module.exports.updateProfile = () => {
+  // TODO: Дополнить
+};
