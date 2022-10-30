@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ const user = require('./routes/users');
 const movie = require('./routes/movies');
 const { HTTP_RESPONSE } = require('./constants/errors');
 const NotFoundError = require('./errors/not-found-err');
+const { cors } = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 
@@ -19,6 +21,8 @@ const app = express();
 app.use(bodyParser.json());
 // for receiving web pages inside a POST request
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors);
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
