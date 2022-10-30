@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 const commonError = require('./middlewares/common-error');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const userAuth = require('./routes/auth');
 const user = require('./routes/users');
 const movie = require('./routes/movies');
@@ -23,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
+app.use(requestLogger);
 app.use('/', userAuth);
 app.use(auth);
 app.use('/users', user);
@@ -31,6 +33,7 @@ app.all('/*', (req, res, next) => {
   next(new NotFoundError(HTTP_RESPONSE.notFound.message));
 });
 
+app.use(errorLogger);
 app.use(errors());
 app.use(commonError);
 app.listen(PORT);
