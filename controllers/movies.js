@@ -68,14 +68,14 @@ module.exports.deleteMovieById = (req, res, next) => {
             throw new ForbiddenError();
           }
           res.send(foundMovie);
-        })
-        .catch((err) => {
-          if (err.name === ERROR_TYPE.cast) {
-            next(new BadRequestError());
-            return;
-          }
-          next(err);
         });
+    })
+    .catch((err) => {
+      if (err.name === ERROR_TYPE.cast) {
+        next(new BadRequestError());
+        return;
+      }
+      next(err);
     })
     .catch(next);
 };

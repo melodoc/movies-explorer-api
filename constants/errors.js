@@ -23,6 +23,7 @@ const VALIDATION_ERROR_MESSAGE = {
 const ERROR_TYPE = {
   cast: 'CastError',
   validity: 'ValidationError',
+  duplicateKey: 'DuplicateKey',
 };
 
 module.exports = {

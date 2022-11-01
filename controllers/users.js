@@ -51,7 +51,7 @@ module.exports.login = (req, res, next) => {
       res.send({ token });
     })
     .catch(() => {
-      next(new UnauthorizedError());
+      next(new UnauthorizedError('Неправильная почта или пароль'));
     });
 };
 
@@ -85,6 +85,10 @@ module.exports.updateProfile = (req, res, next) => {
       });
     })
     .catch((err) => {
+      if (err.codeName === ERROR_TYPE.duplicateKey) {
+        next(new ConflictError());
+        return;
+      }
       if (err.name === ERROR_TYPE.cast || err.name === ERROR_TYPE.validity) {
         next(new BadRequestError());
         return;

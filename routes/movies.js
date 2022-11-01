@@ -21,7 +21,7 @@ router.post(
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
       thumbnail: Joi.string().uri().regex(URL_REG_EXP).required(),
-      movieId: Joi.string().required(),
+      movieId: Joi.number().integer().required(),
     }),
   }),
   createMovie,
