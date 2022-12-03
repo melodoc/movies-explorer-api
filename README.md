@@ -16,7 +16,7 @@ An API where you can add movies and delete them.
 
 |          |                            Route                        |
 |----------|---------------------------------------------------------|
-|IP        |51.250.101.185                                            |
+|IP        |130.193.42.249                                           |
 |Backend   |https://api.movies.melodoc.nomoredomains.icu/   |
 
 ## The authors
