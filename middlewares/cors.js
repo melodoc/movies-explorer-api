@@ -5,6 +5,8 @@ const allowedCors = [
   'http://api.movies.melodoc.nomoredomains.icu',
   'https://api.movies.melodoc.nomoredomains.icu',
   'api.movies.melodoc.nomoredomains.icu',
+  'http://movies.melodoc.nomoredomains.club',
+  'https://movies.melodoc.nomoredomains.club'
 ];
 
 const cors = (req, res, next) => {
