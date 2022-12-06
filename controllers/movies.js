@@ -5,8 +5,8 @@ const ForbiddenError = require('../errors/forbidden-err');
 const { ERROR_TYPE, HTTP_RESPONSE } = require('../constants/errors');
 
 // GET /movies — returns all movies saved by the current user
-module.exports.getMovies = (_req, res, next) => {
-  Movie.find({})
+module.exports.getMovies = (req, res, next) => {
+  Movie.find({ owner: req.user._id })
     .then((movie) => res.send(movie))
     .catch(next);
 };
@@ -62,13 +62,12 @@ module.exports.deleteMovieById = (req, res, next) => {
       if (!movie.owner.equals(req.user._id)) {
         throw new ForbiddenError();
       }
-      Movie.findByIdAndDelete(req.params.movieId)
-        .then((foundMovie) => {
-          if (!foundMovie) {
-            throw new ForbiddenError();
-          }
-          res.send(foundMovie);
-        });
+      Movie.findByIdAndDelete(req.params.movieId).then((foundMovie) => {
+        if (!foundMovie) {
+          throw new ForbiddenError();
+        }
+        res.send(foundMovie);
+      });
     })
     .catch((err) => {
       if (err.name === ERROR_TYPE.cast) {

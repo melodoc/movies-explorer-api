@@ -2,11 +2,14 @@ const allowedCors = [
   'localhost:3000',
   'http://localhost:3000',
   'https://localhost:3000',
+  'localhost:3001',
+  'http://localhost:3001',
+  'https://localhost:3001',
   'http://api.movies.melodoc.nomoredomains.icu',
   'https://api.movies.melodoc.nomoredomains.icu',
   'api.movies.melodoc.nomoredomains.icu',
   'http://movies.melodoc.nomoredomains.club',
-  'https://movies.melodoc.nomoredomains.club'
+  'https://movies.melodoc.nomoredomains.club',
 ];
 
 const cors = (req, res, next) => {
